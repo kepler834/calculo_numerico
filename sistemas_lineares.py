@@ -4,9 +4,11 @@ import numpy as np
 # 2A + 4B - 3C = 1
 # 3A + 6B - 5C = 0
 
-coeficientes = np.array([[1,1,2],[2,4,-3],[3,6,-5]])
-var_independentes = np.array([[9],[1],[0]])
+coeficientes = np.array([[10,2,1],[1,5,1],[2,3,10]])
+var_independentes = np.array([[7],[-8],[6]])
 matriz_aumentada = np.concatenate((coeficientes,var_independentes),axis=1)
+chute_inicial = np.array([0.7,-1.6,0.6])
+ciclos = 3
 
 def sistemaValido():
     determinante = np.linalg.det(coeficientes)
@@ -75,6 +77,26 @@ def cramer():
         resul[i] = np.linalg.det(matrix)/determinante
     return resul
 
+def gaussJacobi():
+    matriz_anterior = chute_inicial
+    matriz_posterior = np.zeros(len(matriz_anterior))
+    for i in range(0, ciclos):
+        for idx, val in enumerate(coeficientes,0):
+            somatorio = np.dot(matriz_anterior,val) - (matriz_anterior[idx]*val[idx])
+            matriz_posterior[idx] = (var_independentes[idx] - somatorio)/ val[idx]
+        matriz_anterior = np.copy(matriz_posterior)
+    return matriz_posterior
+
+def gaussSeidel():
+    matriz_anterior = chute_inicial
+    matriz_posterior = np.zeros(len(matriz_anterior))
+    for i in range(0, ciclos):
+        for idx, val in enumerate(coeficientes,0):
+            somatorio = np.dot(matriz_anterior,val) - (matriz_anterior[idx]*val[idx])
+            matriz_posterior[idx] = (var_independentes[idx] - somatorio)/ val[idx]
+            matriz_anterior[idx] = matriz_posterior[idx]
+    return matriz_posterior
+
 #verificando se o sistema definido é valido
 if sistemaValido() == False:
     quit()
@@ -98,3 +120,13 @@ print(inv.transpose())
 print("\n-------------cramer---------------")
 cra = cramer()
 print(cra)
+
+#encontrando a solucao do sistema pelo metodo de Gauss-Jacobi
+print("\n-----------gaussJacobi------------")
+gja = gaussJacobi()
+print(gja)
+
+#encontrando a solucao do sistema pelo metodo de Gauss-seidel
+print("\n-----------gaussSeidel------------")
+gs = gaussSeidel()
+print(gs,'\n')
