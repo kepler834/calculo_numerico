@@ -4,10 +4,10 @@ import numpy as np
 # 2A + 4B - 3C = 1
 # 3A + 6B - 5C = 0
 
-coeficientes = np.array([[10,2,1],[1,5,1],[2,3,10]])
-var_independentes = np.array([[7],[-8],[6]])
+coeficientes = np.array([[1,2,1],[2,3,1],[1,1,2]])
+var_independentes = np.array([[10],[15],[9]])
 matriz_aumentada = np.concatenate((coeficientes,var_independentes),axis=1)
-chute_inicial = np.array([0.7,-1.6,0.6])
+chute_inicial = np.array([1,1,1])
 ciclos = 3
 
 def sistemaValido():
@@ -93,7 +93,7 @@ def gaussSeidel():
     for i in range(0, ciclos):
         for idx, val in enumerate(coeficientes,0):
             somatorio = np.dot(matriz_anterior,val) - (matriz_anterior[idx]*val[idx])
-            matriz_posterior[idx] = (var_independentes[idx] - somatorio)/ val[idx]
+            matriz_posterior[idx] = float(var_independentes[idx] - somatorio)/ float(val[idx])
             matriz_anterior[idx] = matriz_posterior[idx]
     return matriz_posterior
 

@@ -28,7 +28,7 @@ def bisseccao(a,b):
             elif f(b)*f(x)<0:
                 a = x
         print("\nciclos : ",ciclos)
-        return (a+b)/2
+        return x
     else:
         print("INTERVALO INVALIDO")
 
@@ -44,7 +44,7 @@ def posicaoFalsa(a,b):
             elif f(b)*f(x)<0:
                 a = x
         print("\nciclos : ",ciclos)
-        return (a+b)/2
+        return x
     else:
         print("INTERVALO INVALIDO")
 
